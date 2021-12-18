@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_app/services/auth_service.dart';
+import 'package:flutter_app/wrapper.dart';
+import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
@@ -15,19 +18,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter App',
-      theme: ThemeData(
-        primarySwatch: Colors.brown,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        Provider<AuthService>(
+          create: (_) => AuthService(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter App',
+        theme: ThemeData(
+          primarySwatch: Colors.purple,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const Wrapper(),
+          '/login': (context) => const LoginScreen(),
+          '/register': (context) => const RegisterScreen(),
+          '/home': (context) => const HomeScreen(),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginScreen(),
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
-        '/home': (context) => const HomeScreen(),
-      },
     );
   }
 }

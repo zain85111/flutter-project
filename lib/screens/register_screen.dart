@@ -1,15 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController conPasswordController = TextEditingController();
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final authService = Provider.of<AuthService>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register Page"),
@@ -51,22 +53,6 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
-              child: TextField(
-                controller: conPasswordController,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
-                  labelText: "Confirm Password",
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 5,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.all(5),
               // ignore: deprecated_member_use
               child: ElevatedButton(
@@ -74,7 +60,11 @@ class RegisterScreen extends StatelessWidget {
                   'Register',
                   style: TextStyle(fontSize: 20.0),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await authService.createUser(
+                      emailController.text, passwordController.text);
+                  Navigator.pop(context);
+                },
               ),
             ),
           ],

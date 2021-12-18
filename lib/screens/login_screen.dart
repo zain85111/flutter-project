@@ -1,15 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
+    final authService = Provider.of<AuthService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login Page"),
@@ -58,8 +62,9 @@ class LoginScreen extends StatelessWidget {
                   'LogIn',
                   style: TextStyle(fontSize: 20.0),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, "/home");
+                onPressed: () async {
+                  await authService.signIn(
+                      emailController.text, passwordController.text);
                 },
               ),
             ),
