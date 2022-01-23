@@ -58,10 +58,7 @@ class LoginScreen extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               // ignore: deprecated_member_use
               child: ElevatedButton(
-                child: const Text(
-                  'LogIn',
-                  style: TextStyle(fontSize: 20.0),
-                ),
+                child: const Text('Login'),
                 onPressed: () async {
                   await authService.signIn(
                       emailController.text, passwordController.text);
@@ -72,10 +69,7 @@ class LoginScreen extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               // ignore: deprecated_member_use
               child: ElevatedButton(
-                child: const Text(
-                  'Register',
-                  style: TextStyle(fontSize: 20.0),
-                ),
+                child: const Text('Register'),
                 onPressed: () {
                   Navigator.pushNamed(context, "/register");
                 },
